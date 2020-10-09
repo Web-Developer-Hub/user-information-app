@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import data from './data/data.json';
+import User from './components/user-data/user.js';
+
 
 function App() {
+const [accounts, setAccounts] = useState([]);
+
+  useEffect( () => {
+    setAccounts(data);
+  }, []);
+
+  const [user, setUser] = useState([]);
+
+  const handleUser = (users) => {
+    const newUser = [...user, users];
+    setUser(newUser)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className = 'head'>This is my users information site </h1>
+      <h2 className ='head'>Total Users : {accounts.length}</h2>
+      <h2 className ='head'> New Add Users : {user.length}</h2>
+      
+      <ul>
+        {
+          accounts.map(account => <User account = {account} handleUser = {handleUser} ></User> )
+        }
+      </ul>
     </div>
   );
 }
